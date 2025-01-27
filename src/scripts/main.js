@@ -3,23 +3,35 @@
 // write code here
 const list = document.body.querySelectorAll('li');
 
-const employees = [];
+function getEmployees(employeesList) {
+  const employees = [];
 
-for (let i = 0; i < list.length; i++) {
-  const employeeName = list[i].innerHTML.trim();
-  const salary = parseInt(
-    list[i].getAttribute('data-salary').replace(/[$,]/g, ''),
-  );
+  for (let i = 0; i < employeesList.length; i++) {
+    const employeeName = employeesList[i].innerHTML.trim();
+    const salary = parseInt(
+      employeesList[i].getAttribute('data-salary').replace(/[$,]/g, ''),
+    );
+    const position = employeesList[i].getAttribute('data-position');
+    const age = employeesList[i].getAttribute('data-age');
 
-  employees.push({ employeeName, salary });
+    employees.push({
+      employeeName,
+      position,
+      salary,
+      age,
+    });
+  }
+
+  return employees;
 }
 
 function sortList(employeesList) {
   return employeesList.sort((a, b) => b.salary - a.salary);
 }
 
-const sorted = sortList(employees);
+const unsortedEmployees = getEmployees(list);
+const sortedEmployees = sortList(unsortedEmployees);
 
-for (let i = 0; i < sorted.length; i++) {
-  list[i].innerHTML = sorted[i].employeeName;
+for (let i = 0; i < sortedEmployees.length; i++) {
+  list[i].innerHTML = sortedEmployees[i].employeeName;
 }
